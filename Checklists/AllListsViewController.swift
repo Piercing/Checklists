@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AllListsViewController: UITableViewController {
+class AllListsViewController: UITableViewController, ListDetailViewControllerDelegate {
   
   // MARK: - Globals variables
   
@@ -68,7 +68,16 @@ class AllListsViewController: UITableViewController {
     let checklist = lists[indexPath.row]
     // Envío el objeto 'sender: checklist' pulsado en la lista a través del segue,
     // aunque lo enviará realmente el método prepare (for segue:)', de más abajo.
-    performSegue(withIdentifier: "ShowChecklist", sender: checklist)  }
+    performSegue(withIdentifier: "ShowChecklist", sender: checklist)
+  }
+  
+  // Borrar un item checklist
+  override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    lists.remove(at: indexPath.row)
+    
+    let indexPaths = [indexPath]
+    tableView.deleteRows(at: indexPaths, with: .automatic)
+  }
   
   // MARK: - Funtions
   
@@ -85,12 +94,10 @@ class AllListsViewController: UITableViewController {
     }
   }
   
-  
-  
   // MARK: - Navigation
   
   // Aquí establecemos las propiedades del nuevo controlador de vista antes de que se haga visible.
-  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) { /// MOSTRAMOS UN CHECKLIST YA EXISTENTE PARA EDITARLO.
     if segue.identifier == "ShowChecklist" { // Busco el segue con el identificador dado.
       // Guardo a que controlador se dirige el segue seleccionado.
       let controller = segue.destination as! ChecklistViewController
@@ -101,6 +108,50 @@ class AllListsViewController: UITableViewController {
       // del controlador 'ChecklistViewController' que es el controlador destino, establezco el título, 'title = checklist.name'
       // que mostrará la barra de navegación del viewController 'ChecklistViewController', y será el texto de la fila seleccionada.
       controller.checklist = sender as! Checklist
+      
+    } else if segue.identifier == "AddChecklist" { /// CREAMOS/AÑADIMOS UN NUEVO CHECKLIST.
+      let navigationController = segue.destination as! UINavigationController
+      let controller = navigationController.topViewController as! ListDetailViewController
+      
+      controller.delegate = self
+      controller.checklistToEdit = nil
     }
   }
+  
+  // MARK: - Protocols ListDetail methods - Delegate
+  
+  func listDetailViewControllerDidCancel(_ controller: ListDetailViewController) { /// AL PULSAR CANCEL.
+    dismiss(animated: true, completion: nil)
+  }
+  
+  func listDetailViewController(_ controller: ListDetailViewController,
+                                didFinishAdding checklist: Checklist) { /// AL PULSAR DONE AÑADIENDO UN ITEM.
+    
+    let newRowIndex = lists.count
+    lists.append(checklist)
+    let indexPath = IndexPath(row: newRowIndex, section: 0)
+    let indexPaths = [indexPath]
+    tableView.insertRows(at: indexPaths, with: .automatic)
+    dismiss(animated: true, completion: nil)
+  }
+  
+  func listDetailViewController(_ controller: ListDetailViewController,
+                                didFinishEditing checklist: Checklist) { /// AL PULSAR DONE EDITANDO UN ITEM.
+    
+    if let index = lists.index(of: checklist) {
+      let indexPath = IndexPath(row: index, section: 0)
+      if let cell = tableView.cellForRow(at: indexPath) {
+        cell.textLabel!.text = checklist.name
+      }
+    }
+    dismiss(animated: true, completion: nil)
+  }
 }
+
+
+
+
+
+
+
+

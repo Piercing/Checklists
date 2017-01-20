@@ -83,6 +83,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
     saveChecklistItems()
   }
   
+  // Borrar un item detail.
   override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle,forRowAt indexPath: IndexPath) {
     // 1.-
     items.remove(at: indexPath.row)
@@ -147,12 +148,12 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
   
   // MARK: - Protocols ItemDetail methods - Delegate
   
-  func itemDetailViewControllerDidCancel(_ controller: ItemDetailViewController) {// AL PULSAR CANCEL.
+  func itemDetailViewControllerDidCancel(_ controller: ItemDetailViewController) { /// AL PULSAR CANCEL.
     dismiss(animated: true, completion: nil)
   }
   
   func itemDetailViewController(_ controller: ItemDetailViewController,
-                                didFinishAdding item: ChecklistItem) {// AL PULSAR DONE AÑADIENDO UN ITEM.
+                                didFinishAdding item: ChecklistItem) { /// AL PULSAR DONE AÑADIENDO UN ITEM.
     
     // Número de filas que hay en la tabla, es necesario
     // para actualizar correctamente la vista de la tabla.
@@ -178,7 +179,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
   }
   
   func itemDetailViewController(_ controller: ItemDetailViewController,
-                                didFinishEditing item: ChecklistItem) {// AL PULSAR DONE EDITANDO UN ITEM.
+                                didFinishEditing item: ChecklistItem) { /// AL PULSAR DONE EDITANDO UN ITEM.
     if let index = items.index(of: item) {
       let indexPath = IndexPath(row: index, section: 0)
       if let cell = tableView.cellForRow(at: indexPath) {
@@ -191,7 +192,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
     saveChecklistItems()
   }
   
-  // MARK: - Segues
+  // MARK: - Navigation
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     
@@ -213,6 +214,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
       controller.delegate = self
       
     } else if segue.identifier == "EditItem" {
+      
       let navigationController = segue.destination as! UINavigationController
       let controller = navigationController.topViewController as! ItemDetailViewController
       controller.delegate = self
