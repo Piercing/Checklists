@@ -45,6 +45,59 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5280A7011E3390D6006A8E7B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				5224C0C11E323DF1006BFDFA /* Checklist.swift */,
+				7B2952AF1D2BA9AA000B9D60 /* ChecklistItem.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		5280A7021E3390E2006A8E7B /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				5280A7061E3393F0006A8E7B /* CheckList */,
+				5280A7051E3393C8006A8E7B /* AllList */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		5280A7031E3390F9006A8E7B /* ViewsUI */ = {
+			isa = PBXGroup;
+			children = (
+				7B2952A11D2A44A3000B9D60 /* Main.storyboard */,
+				7B2952A61D2A44A3000B9D60 /* LaunchScreen.storyboard */,
+			);
+			name = ViewsUI;
+			sourceTree = "<group>";
+		};
+		5280A7041E33910A006A8E7B /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				7B29529D1D2A44A3000B9D60 /* AppDelegate.swift */,
+			);
+			name = Common;
+			sourceTree = "<group>";
+		};
+		5280A7051E3393C8006A8E7B /* AllList */ = {
+			isa = PBXGroup;
+			children = (
+				5224C0BF1E323399006BFDFA /* AllListsViewController.swift */,
+				5224C0C31E32664C006BFDFA /* ListDetailViewController.swift */,
+			);
+			name = AllList;
+			sourceTree = "<group>";
+		};
+		5280A7061E3393F0006A8E7B /* CheckList */ = {
+			isa = PBXGroup;
+			children = (
+				7B29529F1D2A44A3000B9D60 /* ChecklistViewController.swift */,
+				7B352B1D1D2CF14E00A0488B /* ItemDetailViewController.swift */,
+			);
+			name = CheckList;
+			sourceTree = "<group>";
+		};
 		7B2952911D2A44A3000B9D60 = {
 			isa = PBXGroup;
 			children = (
@@ -66,15 +119,10 @@
 		7B29529C1D2A44A3000B9D60 /* Checklists */ = {
 			isa = PBXGroup;
 			children = (
-				7B29529D1D2A44A3000B9D60 /* AppDelegate.swift */,
-				7B29529F1D2A44A3000B9D60 /* ChecklistViewController.swift */,
-				7B352B1D1D2CF14E00A0488B /* ItemDetailViewController.swift */,
-				5224C0BF1E323399006BFDFA /* AllListsViewController.swift */,
-				5224C0C31E32664C006BFDFA /* ListDetailViewController.swift */,
-				5224C0C11E323DF1006BFDFA /* Checklist.swift */,
-				7B2952AF1D2BA9AA000B9D60 /* ChecklistItem.swift */,
-				7B2952A11D2A44A3000B9D60 /* Main.storyboard */,
-				7B2952A61D2A44A3000B9D60 /* LaunchScreen.storyboard */,
+				5280A7041E33910A006A8E7B /* Common */,
+				5280A7021E3390E2006A8E7B /* Controllers */,
+				5280A7011E3390D6006A8E7B /* Models */,
+				5280A7031E3390F9006A8E7B /* ViewsUI */,
 				7B2952A41D2A44A3000B9D60 /* Assets.xcassets */,
 				7B2952A91D2A44A3000B9D60 /* Info.plist */,
 			);
@@ -283,7 +331,7 @@
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Checklists/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.razeware.Checklists;
+				PRODUCT_BUNDLE_IDENTIFIER = com.devspain.Checklists;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -296,7 +344,7 @@
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Checklists/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.razeware.Checklists;
+				PRODUCT_BUNDLE_IDENTIFIER = com.devspain.Checklists;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ChecklistViewController.swift
 //  Checklists
 //
 //  Created by Piercing on 17/1/17.
@@ -18,7 +18,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
   // MARK: - Contructors
   
   /// Esto sigue el patrón de los métodos init:
-  /// 1. Primero asegúrese de que los elementos de la variable de instancia tengan un valor adecuado (una nueva matriz).
+  /// 1. Primero asegúrese de que los elementos de la variable de instancia tengan un valor adecuado (un nuevo array).
   /// 2. A continuación, llamar a la versión super de init (). Esta vez se llama a super.init (codificador) para asegurarse de que el resto del controlador de vista se desbloquea correctamente desde el guión gráfico.
   /// 3. Por último, puede llamar a otros métodos. Aquí se llama un nuevo método para hacer el trabajo real de cargar el archivo plist.
   required init?(coder aDecoder: NSCoder) {
@@ -269,7 +269,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
 // NOTA:  loose coupling and is considered good software design practice. ACOPLAMIENTO SUELTO, cuando A es delegado
 // de B, pero B no sabe nada sobre A, lo único que puede mandarle mensajes a A por medio del delegado.
 
-// VOY POR LA PÁGINA 145
+// VOY POR LA PÁGINA 168
 
 
 

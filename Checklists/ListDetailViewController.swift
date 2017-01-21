@@ -1,9 +1,9 @@
 //
-//  ListDetailViewController.swift
+//  ItemDetailViewController.swift
 //  Checklists
 //
-//  Created by Piercing on 20/1/17.
-//  Copyright © 2017 Razeware. All rights reserved.
+//  Created by Piercing on 18/1/17.
+//  Copyright © 2017 DevSpain. All rights reserved.
 //
 
 import UIKit

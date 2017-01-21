@@ -1,8 +1,8 @@
 //
-//  ChecklistItem.swift
+//  ItemDetailViewController.swift
 //  Checklists
 //
-//  Created by Piercing on 17/1/17.
+//  Created by Piercing on 18/1/17.
 //  Copyright © 2017 DevSpain. All rights reserved.
 //
 
@@ -34,7 +34,7 @@ class ChecklistItem: NSObject, NSCoding {
   //'ChecklistItem', enviará al elemento checklistItem
   // un mensaje con 'encode(with)'.
   func encode(with aCoder: NSCoder) {
-    // Aquí simplemente dices: ChecklistItem debe guardar un objeto llamado
+    // Aquí simplemente decimos: ChecklistItem debe guardar un objeto llamado
     // "Text" que contiene el valor del texto de la variable de instancia, y
     // un objeto llamado "Checked" que contiene el valor de la variable marcada.
     // Sólo estas dos líneas son suficientes para que funcione el sistema de

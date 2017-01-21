@@ -1,9 +1,9 @@
 //
-//  AllListsViewController.swift
+//  ItemDetailViewController.swift
 //  Checklists
 //
-//  Created by Piercing on 20/1/17.
-//  Copyright © 2017 Razeware. All rights reserved.
+//  Created by Piercing on 18/1/17.
+//  Copyright © 2017 DevSpain. All rights reserved.
 //
 
 import UIKit
@@ -77,6 +77,34 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     
     let indexPaths = [indexPath]
     tableView.deleteRows(at: indexPaths, with: .automatic)
+  }
+  
+  override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+    
+    // En este método se crea el objeto view controller para la pantalla Add/Edit Checklist 
+    // y se muestra con 'present' en la pantalla. Esto es parecido a lo que 'segue' hace detrás 
+    // de escena. El view controller está embebido en el storyboard y hay que pedirle al storyboard
+    // que lo cargue.
+    // ¿De dónde sacamos ese objeto del storyboard?. Cada view Controller
+    // tiene una propiedad del storyboard que hace referencia al storyboard desde el que se cargó el view controller.
+    // La propiedad 'storyboard!' es opcional porque los view controllers no siempre se cargan desde un storyboard.
+    // Pero este sí, por lo que podemos utilizar '!' para desempaquetar ya que estamos seguros de que no será nil.
+    
+    // La llamada a 'instantiateViewController' toma una String identificador 'ListDetailNavigationController';
+    // y así es como pedimos al stroyboard que cree un nuevo view controller, en nuestro caso éste será el controlador
+    // de navegación que contine 'ListDetailViewController'; aún tenemos que establecer este identificador en el controlador
+    // de navegación, de lo contrario el storyboard no podrá encontrarlo.
+    
+    let navigationController = storyboard!.instantiateViewController(
+      withIdentifier: "ListDetailNavigationController")  as! UINavigationController
+    
+    let controller = navigationController.topViewController as! ListDetailViewController
+    controller.delegate = self
+    
+    let checklist = lists[indexPath.row]
+    controller.checklistToEdit = checklist
+    
+    present(navigationController, animated: true, completion: nil)
   }
   
   // MARK: - Funtions
