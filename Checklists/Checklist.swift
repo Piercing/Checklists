@@ -38,12 +38,22 @@ class Checklist: NSObject, NSCoding {
   
   // MARK: - Functions
   
+//  func countUncheckedItems() -> Int {
+//    var count = 0
+//    for item in items where !item.checked {
+//      count += 1
+//    }
+//    return count
+//  }
+  // Igual que la anterior, pero en lo que se llama programación funcional, 
+  // con expresiones matemáticas en funciones, de ahí que se llame funcional.
   func countUncheckedItems() -> Int {
-    var count = 0
-    for item in items where !item.checked {
-      count += 1
-    }
-    return count
+    
+    // 'Reduce ()' es un método que mira cada elemento y realiza el código en el bloque {}. 
+    // Inicialmente, la variable cnt contiene el valor 0, pero después de cada elemento se 
+    // incrementa por 0 o 1, dependiendo de si el elemento se ha comprobado. Cuando 'reduce()'
+    // se hace, su valor de retorno es el recuento total de elementos que no están marcados.
+    return items.reduce(0) { cnt, item in cnt + (item.checked ? 0 : 1) }
   }
   
 }

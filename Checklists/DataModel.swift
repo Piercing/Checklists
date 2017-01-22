@@ -84,10 +84,19 @@ class DataModel {
       
       lists = unarchiver.decodeObject(forKey: "Checklists") as! [Checklist]
       unarchiver.finishDecoding()
+      
+      // Sólo para asegurarse de que las listas existentes también se ordenan en el orden
+      // correcto, también debe llamar sortCheckLists() cuando se carga el archivo plist.
+      sortChecklists()
     }
   }
   
   // MARK: - Functions
+  
+  func sortChecklists() {
+    lists.sort(by: { checklist1, checklist2 in
+      return checklist1.name.localizedStandardCompare(checklist2.name) == .orderedAscending })
+  }
   
   // Esto crea una nueva instancia de diccionario y
   // añade el valor -1 para la clave "ChecklistIndex" y no se bloquee la aplicación al hacer una nueva instalación ya que
