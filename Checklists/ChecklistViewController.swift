@@ -12,20 +12,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
   
   // MARK: - Global variables.
   
-  var items: [ChecklistItem]
   var checklist: Checklist!
-  
-  // MARK: - Contructors
-  
-  /// Esto sigue el patrón de los métodos init:
-  /// 1. Primero asegúrese de que los elementos de la variable de instancia tengan un valor adecuado (un nuevo array).
-  /// 2. A continuación, llamar a la versión super de init (). Esta vez se llama a super.init (codificador) para asegurarse de que el resto del controlador de vista se desbloquea correctamente desde el guión gráfico.
-  /// 3. Por último, puede llamar a otros métodos. Aquí se llama un nuevo método para hacer el trabajo real de cargar el archivo plist.
-  required init?(coder aDecoder: NSCoder) {
-    items = [ChecklistItem]()
-    super.init(coder: aDecoder)
-    loadChecklistItems()
-  }
   
   // MARK:- LifeCycle.
   
@@ -42,8 +29,8 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
   
   // MARK: - Data Source Table
   
-  override func tableView(_ tableView: UITableView,numberOfRowsInSection section: Int) -> Int {
-    return items.count
+  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return checklist.items.count
   }
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -52,7 +39,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
     let cell = tableView.dequeueReusableCell( withIdentifier: "ChecklistItem", for: indexPath)
     
     // Obtengo el objeto del array según la fila seleccionada.
-    let item = items[indexPath.row]
+    let item = checklist.items[indexPath.row]
     
     configureText(for: cell, with: item)
     
@@ -70,7 +57,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
     // Obtengo la celda seleccionada, con if let, me aseguro de que hay una celda seleccionada.
     if let cell = tableView.cellForRow(at: indexPath) {
       // Obtengo el objeto del array según la fila selecionada.
-      let item = items[indexPath.row]
+      let item = checklist.items[indexPath.row]
       // Llamo al método para cambiar su checked a true o false
       // dependiendo del estado en el que se encontraba al tocarlo.
       item.toggleChecked()
@@ -79,20 +66,15 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
     }
     // Para que al tocar la fila no se quede marcada una vez pierda el foco.
     tableView.deselectRow(at: indexPath, animated: true)
-    // Guardo los cambios en local
-    saveChecklistItems()
   }
   
   // Borrar un item detail.
   override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle,forRowAt indexPath: IndexPath) {
     // 1.-
-    items.remove(at: indexPath.row)
+    checklist.items.remove(at: indexPath.row)
     // 2.-
     let indexPaths = [indexPath]
     tableView.deleteRows(at: indexPaths, with: .automatic)
-    
-    // Guardo los cambios en local
-    saveChecklistItems()
   }
   
   // MARK: - Functions
@@ -115,36 +97,6 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
     label.text = item.text
   }
   
-  /// CODIFICAR EL ARRAY ChecklistItems para guardarlo en 'Checklist.plist'.
-  // Siempre que modifiquemos la lista de elementos debemos de llamar a éste método.
-  func saveChecklistItems() {
-    
-    // Es una forma de NSCoder de crear archivos 'plist'.
-    // Codifica el array y todos los archivos 'ChecklistItems'
-    // en él, en algún tipo de formato de datos binarios que
-    // se pueden escribir en un archivo.
-    let data = NSMutableData()
-    let archiver = NSKeyedArchiver(forWritingWith: data)
-    archiver.encode(items, forKey: "ChecklistItems")
-    archiver.finishEncoding()
-    // Los datos se colocan en un objeto' NSMutableData', que
-    // se escribirá en el archivo especificado por 'dataFilePath'.
-    data.write(to: dataFilePath(), atomically: true)
-  }
-  
-  /// DECODIFICAR EL ARRAY ChecklistItems para leerlo de 'Checklist.plist'
-  func loadChecklistItems() {
-    // 1.- Obtengo la ruta.
-    let path = dataFilePath()
-    // 2.- Intento cargar el contenido de 'Checklist.plist' en un objeto Data.
-    if let data = try? Data(contentsOf: path) {
-      // 3.- Cuando la aplicación encuentre un archivo 'Checklist.plist'
-      // cargará todo el array con las copias exactas de ChecklistItems.
-      let unarchiver = NSKeyedUnarchiver(forReadingWith: data)
-      items = unarchiver.decodeObject(forKey: "ChecklistItems") as! [ChecklistItem]
-      unarchiver.finishDecoding()
-    }
-  }
   
   // MARK: - Protocols ItemDetail methods - Delegate
   
@@ -157,9 +109,9 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
     
     // Número de filas que hay en la tabla, es necesario
     // para actualizar correctamente la vista de la tabla.
-    let newRowIndex = items.count
+    let newRowIndex = checklist.items.count
     // Añado el item que recibo al array de items.
-    items.append(item)
+    checklist.items.append(item)
     
     // Le indico que la voy a insertar en la sección 0, en la fila con el
     // valor que tiene 'newRowIndex', (que será la última fila), una nueva celda.
@@ -174,22 +126,17 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
     
     // Una vez pulso Done y se ha completado lo anterior vuelvo a la vista anterior.
     dismiss(animated: true, completion: nil)
-    // Guardo los datos en local.
-    saveChecklistItems()
   }
   
   func itemDetailViewController(_ controller: ItemDetailViewController,
                                 didFinishEditing item: ChecklistItem) { /// AL PULSAR DONE EDITANDO UN ITEM.
-    if let index = items.index(of: item) {
+    if let index = checklist.items.index(of: item) {
       let indexPath = IndexPath(row: index, section: 0)
       if let cell = tableView.cellForRow(at: indexPath) {
         configureText(for: cell, with: item)
       }
     }
     dismiss(animated: true, completion: nil)
-    // Guardo los datos en local
-
-    saveChecklistItems()
   }
   
   // MARK: - Navigation
@@ -224,24 +171,14 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
       if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
         // Una vez que tengo el número de la fila, puedo obtener el objeto ChecklistItem para editarlo y asignarlo
         // a la propiedad itemToEdit de ItemDetailViewController, sacándolo del array que contiene dichos items.
-        controller.itemToEdit = items[indexPath.row]
+        controller.itemToEdit = checklist.items[indexPath.row]
       }
     }
   }
   
-  // MARK: - Data Persistence.
-  
-  func documentsDirectory() -> URL {
-    let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-    return paths[0]
-  }
-  
-  func dataFilePath() -> URL {
-    // Utilizo el método anterior para construir la ruta completa al
-    // archivo que almacenará los elementos de la lista 'Checklists'.
-    return documentsDirectory().appendingPathComponent("Checklists.plist")
-  }
 }
+
+
 
 
 // MARK: - NOTES
@@ -269,7 +206,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
 // NOTA:  loose coupling and is considered good software design practice. ACOPLAMIENTO SUELTO, cuando A es delegado
 // de B, pero B no sabe nada sobre A, lo único que puede mandarle mensajes a A por medio del delegado.
 
-// VOY POR LA PÁGINA 168
+// VOY POR LA PÁGINA 200
 
 
 

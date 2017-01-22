@@ -1,0 +1,27 @@
+
+/* Class = "UILabel"; text = "√"; ObjectID = "5NG-ot-Xio"; */
+"5NG-ot-Xio.text" = "√";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "5vQ-v2-1gO"; */
+"5vQ-v2-1gO.text" = "Label";
+
+/* Class = "UINavigationItem"; title = "Add Item"; ObjectID = "GN7-kv-Ixx"; */
+"GN7-kv-Ixx.title" = "Add Item";
+
+/* Class = "UINavigationItem"; title = "(Name of the Checklist)"; ObjectID = "OdW-vT-WwE"; */
+"OdW-vT-WwE.title" = "(Name of the Checklist)";
+
+/* Class = "UINavigationItem"; title = "Add Checklist"; ObjectID = "VTM-9a-UxK"; */
+"VTM-9a-UxK.title" = "Add Checklist";
+
+/* Class = "UITextField"; placeholder = "Name of the Item"; ObjectID = "ii6-im-Ybi"; */
+"ii6-im-Ybi.placeholder" = "Name of the Item";
+
+/* Class = "UINavigationItem"; title = "Checklists"; ObjectID = "wL2-HT-6hz"; */
+"wL2-HT-6hz.title" = "Checklists";
+
+/* Class = "UITextField"; placeholder = "Name of list"; ObjectID = "xxg-hI-741"; */
+"xxg-hI-741.placeholder" = "Name of list";
+
+/* Class = "UITableViewController"; title = "Add Checklist"; ObjectID = "yAA-3a-XhE"; */
+"yAA-3a-XhE.title" = "Add Checklist";

@@ -20,16 +20,23 @@ class ChecklistItem: NSObject, NSCoding {
     super.init()
   }
   
+  // MARK: - Functions
+  
+  func toggleChecked() {
+    checked = !checked
+  }
+  
+  
+  // MARK: - Protocol methods NSCoding
+  
+  /// For decoding objects
   required init?(coder aDecoder: NSCoder) {
     text = aDecoder.decodeObject(forKey: "Text") as! String
     checked = aDecoder.decodeBool(forKey: "Checked")
     super.init()
   }
   
-  func toggleChecked() {
-    checked = !checked
-  }
-  
+  /// For encoding objects
   // Cuando 'NSKeyArchiver' intenta codificar el objeto
   //'ChecklistItem', enviará al elemento checklistItem
   // un mensaje con 'encode(with)'.
