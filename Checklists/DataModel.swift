@@ -30,7 +30,6 @@ class DataModel {
     }
   }
   
-  
   // Esto asegura que tan pronto como se crea el objeto 'DataModel', intentará
   // cargar 'Checklist.plist'. NO tenemos que llamar a 'super.init()',  porque
   // 'DataModel' no tiene una superclase,(no se basa en 'NSObject).

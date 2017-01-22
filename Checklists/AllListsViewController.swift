@@ -22,6 +22,11 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     super.viewDidLoad()
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    tableView.reloadData()
+  }
+  
   
   // 'ViewDidAppear ()' no sólo se llama cuando se inicia la aplicación, sino también cada
   // vez que el controlador de navegación desliza la pantalla principal de nuevo a la vista.
@@ -57,11 +62,11 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     navigationController?.delegate = self
     let index = dataModel.indexOfSelectedChecklist
     
-    // PROGRAMACIÓN DEFENSIVA: Realizar una comprobación más precisa para determinar si el índice es válido. 
-    // Debe estar entre 0 y el número de CHECKLIST el modelo de datos. Si no, entonces simplemente no seguir. 
+    // PROGRAMACIÓN DEFENSIVA: Realizar una comprobación más precisa para determinar si el índice es válido.
+    // Debe estar entre 0 y el número de CHECKLIST el modelo de datos. Si no, entonces simplemente no seguir.
     // Esto evita que 'dataModel.lists [index]' solicite un objeto en un índice que no existe y la aplicación no rompa.
     
-    // En 'viewDidAppear()' sólo se realiza el segue cuando el índice es 0 o mayor y también menor que el número 'checklist', 
+    // En 'viewDidAppear()' sólo se realiza el segue cuando el índice es 0 o mayor y también menor que el número 'checklist',
     // lo que significa que sólo es válido si se encuentra entre esos dos valores. Con este control defensivo en su lugar,
     // garantizamos que la aplicación no intentará seguir a una 'checklist' que no existe, incluso si los datosno están sincronizados.
     if index >= 0 && index < dataModel.lists.count {
@@ -83,9 +88,20 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = makeCell(for: tableView)
     
-    //let checklist = lists[indexPath.row]
-    cell.textLabel!.text = "List \(indexPath.row)"
+    let checklist = dataModel.lists[indexPath.row]
+    cell.textLabel!.text = checklist.name
     cell.accessoryType = .detailDisclosureButton // Botón de revelación 'info'
+    
+    let count = checklist.countUncheckedItems()
+    if checklist.items.count == 0 {
+      cell.detailTextLabel!.text = "(No Items)"
+    } else if count == 0 {
+      cell.detailTextLabel!.text = "All Done!"
+    } else {
+      cell.detailTextLabel!.text = "\(count) Remaining"
+    }
+    
+    //cell.imageView!.image = UIImage(named: checklist.iconName)
     
     return cell
   }
@@ -148,6 +164,7 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
   
   // MARK: - Funtions
   
+  // Función propia para crear nueva celda o reutilizar una existente.
   func makeCell(for tableView: UITableView) -> UITableViewCell {
     
     let cellIdentifier = "Cell"
@@ -157,7 +174,7 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     if let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) {
       return cell
     } else {
-      return UITableViewCell(style: .default, reuseIdentifier: cellIdentifier)
+      return UITableViewCell(style: .subtitle, reuseIdentifier: cellIdentifier)
     }
   }
   

@@ -206,7 +206,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
 // NOTA:  loose coupling and is considered good software design practice. ACOPLAMIENTO SUELTO, cuando A es delegado
 // de B, pero B no sabe nada sobre A, lo único que puede mandarle mensajes a A por medio del delegado.
 
-// VOY POR LA PÁGINA 200
+// VOY POR LA PÁGINA 201
 
 
 
