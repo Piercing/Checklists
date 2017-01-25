@@ -83,6 +83,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
     
     // Obtengo el objeto según el tag.
     let label = cell.viewWithTag(1001) as! UILabel
+    label.textColor = view.tintColor
     
     // Compruebo si está o no seleccionado, para marcarlo o no.
     if item.checked {
@@ -206,7 +207,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
 // NOTA:  loose coupling and is considered good software design practice. ACOPLAMIENTO SUELTO, cuando A es delegado
 // de B, pero B no sabe nada sobre A, lo único que puede mandarle mensajes a A por medio del delegado.
 
-// VOY POR LA PÁGINA 201
+// VOY POR LA PÁGINA 233: The steps for this section are as follows:
 
 
 

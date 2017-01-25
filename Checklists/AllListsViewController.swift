@@ -106,8 +106,9 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
       cell.detailTextLabel!.text = "\(count) Remaining"
     }
     
-    //cell.imageView!.image = UIImage(named: checklist.iconName)
-    
+    // Las celdas que usan el estilo estándar de celda de subtítulo vienen con un UIImageView
+    // integrado a la izquierda. Simplemente puede darle la imagen y aparecerá automáticamente.
+    cell.imageView!.image = UIImage(named: checklist.iconName)
     return cell
   }
   
@@ -207,14 +208,14 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     }
   }
   
-  // MARK: - Protocols ListDetail methods - Delegate
+  // MARK: - Protocols ListDetailViewController methods - Delegate
   
   func listDetailViewControllerDidCancel(_ controller: ListDetailViewController) { /// AL PULSAR CANCEL.
     dismiss(animated: true, completion: nil)
   }
   
   func listDetailViewController(_ controller: ListDetailViewController,
-                                didFinishAdding checklist: Checklist) { /// AL PULSAR DONE AÑADIENDO UN ITEM.
+                                didFinishAdding checklist: Checklist) { /// AL PULSAR Done AÑADIENDO UN ITEM.
     
     dataModel.lists.append(checklist)
     dataModel.sortChecklists()
@@ -223,7 +224,7 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
   }
   
   func listDetailViewController(_ controller: ListDetailViewController,
-                                didFinishEditing checklist: Checklist) { /// AL PULSAR DONE EDITANDO UN ITEM.
+                                didFinishEditing checklist: Checklist) { /// AL PULSAR Done EDITANDO UN ITEM.
     
     dataModel.sortChecklists()
     tableView.reloadData()
