@@ -8,9 +8,10 @@
 
 
 import UIKit
+import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
   
   var window: UIWindow?
   let dataModel = DataModel()
@@ -21,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   // Método que se llama tan pronto como se incia la aplicación.
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-
+    
     // Esto encuentra 'AllListViewController' mirando en el storyboard y luego establece
     // su propiedad dataModel. Ahora la pantalla AllList puede acceder de nuevo al array
     // de objetos de 'Checklist'.
@@ -30,7 +31,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     controller.dataModel = dataModel
     
+    // Pedimos permiso para mostrar notificaciones locales.
+    // Este es el mejor sitio, ya que es cuando justo se 
+    // acaba de arrancar la aplicación. Le decimos que queremos
+    // enviar notificaciones de tipo alerta con efecto sonido.
+    let center = UNUserNotificationCenter.current()
+    center.delegate = self
+    
     return true
+  }
+  
+  // Este método se invocará cuando se publique la notificación local y la aplicación siga funcionando
+  func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+    print("Recived local notification \(notification)")
   }
   
   func applicationWillResignActive(_ application: UIApplication) {

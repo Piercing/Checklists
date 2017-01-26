@@ -102,12 +102,11 @@ class DataModel {
   // añade el valor -1 para la clave "ChecklistIndex" y no se bloquee la aplicación al hacer una nueva instalación ya que
   // toma como índice el valor cero, y este es un valor válido para cualquier array, de ahí que arranquemos con -1.
   func registerDefaults() {
-    let dictionary: [String: Any] = [ "ChecklistIndex": -1, "FirstTime": true ]
+    let dictionary: [String: Any] = [ "ChecklistIndex": -1, "FirstTime": true, "ChecklistItemID": 0 ]
     UserDefaults.standard.register(defaults: dictionary)
   }
   
   func handleFirstTime() {
-    
     let userDefaults = UserDefaults.standard
     let firstTime = userDefaults.bool(forKey: "FirstTime")
     
@@ -127,6 +126,27 @@ class DataModel {
       userDefaults.set(false, forKey: "FirstTime")
       userDefaults.synchronize()
     }
+  }
+  
+  
+  // Este método obtiene el valor "ChecklistItemID" actual de UserDefaults,
+  // agrega 1 a él y lo escribe de nuevo en UserDefaults. Devuelve el valor
+  // anterior a la persona que llama. El método también hace userDefaults.
+  // synchronize () para obligar a UserDefaults a escribir estos cambios en
+  // el disco inmediatamente, para que no se pierdan si usted mata la aplicación
+  // de Xcode antes de que tuviera la oportunidad de guardar. Esto es importante
+  // porque nunca desea que dos o más ChecklistItems obtengan el mismo ID.
+  class func nextChecklistItemID() -> Int {
+    let userDefaults = UserDefaults.standard
+    let itemID = userDefaults.integer(forKey: "ChecklistItemID")
+    
+    // La primera vez que se llama a nextChecklistItemID () se devolverá el ID 0.
+    // La segunda vez que se llame, devolverá el ID 1, la tercera vez que devolverá
+    // el ID 2, y así sucesivamente. El número se incrementa en uno cada vez. Puedes
+    // llamar a este método unos cuantos miles de millones de veces antes de que te quedas sin IDs únicas.
+    userDefaults.set(itemID + 1, forKey: "ChecklistItemID")
+    userDefaults.synchronize()
+    return itemID
   }
   
 }
