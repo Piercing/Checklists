@@ -16,10 +16,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
   var window: UIWindow?
   let dataModel = DataModel()
   
-  func saveData() {
-    dataModel.saveChecklists()
-  }
-  
   // Método que se llama tan pronto como se incia la aplicación.
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
     
@@ -43,7 +39,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
   
   // Este método se invocará cuando se publique la notificación local y la aplicación siga funcionando
   func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+    
     print("Recived local notification \(notification)")
+  }
+  
+  func saveData() {
+    dataModel.saveChecklists()
   }
   
   func applicationWillResignActive(_ application: UIApplication) {

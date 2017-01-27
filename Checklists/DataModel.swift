@@ -136,6 +136,9 @@ class DataModel {
   // el disco inmediatamente, para que no se pierdan si usted mata la aplicación
   // de Xcode antes de que tuviera la oportunidad de guardar. Esto es importante
   // porque nunca desea que dos o más ChecklistItems obtengan el mismo ID.
+  
+  /// NOTA: MÉTODO DE CLASE: Añadir la palabra clave de 'class' significa que
+  /// puede llamar a este método sin tener una referencia al objeto DataModel.
   class func nextChecklistItemID() -> Int {
     let userDefaults = UserDefaults.standard
     let itemID = userDefaults.integer(forKey: "ChecklistItemID")
